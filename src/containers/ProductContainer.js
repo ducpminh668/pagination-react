@@ -4,12 +4,11 @@ import { getDataAsync } from "../actions/index";
 import ListProduct from "../components/Product/ListProduct";
 
 class ProductContainer extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
-    this.props.getProducts();
+    if (this.props.productInfo.page > 0) {
+      const { page } = this.props.productInfo;
+      this.props.getProducts(page);
+    }
   }
 
   render() {
@@ -29,8 +28,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getProducts: () => {
-      dispatch(getDataAsync());
+    getProducts: (page, limit ) => {
+      dispatch(getDataAsync(page, limit));
     }
   };
 };
